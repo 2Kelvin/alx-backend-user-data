@@ -6,5 +6,10 @@ from typing import ByteString
 
 def hash_password(password: str) -> ByteString:
     '''encrypts a string password'''
-    encryptedPswd = bcrypt.hashpw(bytes(password), bcrypt.gensalt())
+    encryptedPswd = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return encryptedPswd
+
+
+def is_valid(hashed_password: bytes, password: str) -> bool:
+    '''checking if the string password matches the encrypted password'''
+    return bcrypt.checkpw(password.encode(), hashed_password)
