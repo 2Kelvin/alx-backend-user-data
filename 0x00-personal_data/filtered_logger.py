@@ -49,13 +49,11 @@ def get_logger() -> logging.Logger:
 
     Takes no arguments and returns a logging.Logger object
     '''
-    userDataLogger = logging.getLogger('user_data')
-    userDataLogger.setLevel(logging.INFO)
-    userDataLogger.propagate = False
-    userstreamHandler = logging.StreamHandler()
-    userstreamHandler.setFormatter(RedactingFormatter(list(PII_FIELDS)))
-    userDataLogger.addHandler(userstreamHandler)
-    return userDataLogger
+    logging.getLogger('user_data').setLevel(logging.INFO)
+    logging.getLogger('user_data').propagate = False
+    logging.getLogger('user_data').addHandler(logging.StreamHandler())
+    logging.StreamHandler().setFormatter(RedactingFormatter(PII_FIELDS))
+    return logging.getLogger('user_data')
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
