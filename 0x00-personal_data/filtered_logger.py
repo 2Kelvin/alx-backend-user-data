@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-'''Logging & handling obfuscated data'''
+'''Logging & handling obfuscated data
+'''
+
 from typing import List
 import re
 import logging
@@ -13,15 +15,15 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password',
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    '''returns an obfuscated log message
+    '''Obfuscated log message
 
     Arguments:
         fields, redaction, message, separator
     Return: an obfuscated log message
     '''
-    for eachField in fields:
-        message = re.sub(f'{eachField}=.*?{separator}',
-                         f'{eachField}={redaction}{separator}', message)
+    for fd in fields:
+        message = re.sub(f'{fd}=.*?{separator}',
+                         f'{fd}={redaction}{separator}', message)
     return message
 
 
