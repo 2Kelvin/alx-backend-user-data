@@ -32,8 +32,7 @@ def filter_datum(fields: List[str], redaction: str,
     for eachField in fields:
         logMessage = re.sub(
             f'{eachField}=.*?{separator}',
-            f'{eachField}={redaction}{separator}', logMessage
-        )
+            f'{eachField}={redaction}{separator}', logMessage)
     return logMessage
 
 
