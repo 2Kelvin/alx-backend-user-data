@@ -10,6 +10,20 @@ import mysql.connector
 from os import environ
 
 
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
+    '''returns an obfuscated log message
+
+    Arguments:
+        fields, redaction, message, separator
+    Return: an obfuscated log message
+    '''
+    for eachField in fields:
+        message = re.sub(f'{eachField}=.*?{separator}',
+                         f'{eachField}={redaction}{separator}', message)
+    return message
+
+
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password',
               'ip', 'last_login', 'user_agent')
 
@@ -35,20 +49,6 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(
             self.fields, self.REDACTION, record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
-
-
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
-    '''returns an obfuscated log message
-
-    Arguments:
-        fields, redaction, message, separator
-    Return: an obfuscated log message
-    '''
-    for eachField in fields:
-        message = re.sub(f'{eachField}=.*?{separator}',
-                         f'{eachField}={redaction}{separator}', message)
-    return message
 
 
 def get_logger() -> logging.Logger:
