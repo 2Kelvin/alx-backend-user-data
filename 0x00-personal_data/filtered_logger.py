@@ -30,9 +30,8 @@ def filter_datum(fields: List[str], redaction: str,
                  logMessage: str, separator: str) -> str:
     '''returns a log message'''
     for eachField in fields:
-        logMessage = re.sub(
-            f'{eachField}=.*?{separator}',
-            f'{eachField}={redaction}{separator}', logMessage)
+        logMessage = re.sub(f'{eachField}=.*?{separator}',
+                            f'{eachField}={redaction}{separator}', logMessage)
     return logMessage
 
 
