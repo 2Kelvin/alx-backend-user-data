@@ -83,7 +83,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return dbConnection
 
 
-def main():
+def main() -> None:
     '''get into database, retrieve and display the data
 
     obtain a database connection using get_db and retrieve
