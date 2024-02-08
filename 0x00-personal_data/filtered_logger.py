@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-'''Logging & handling obfuscated data
-'''
+'''Logging & handling obfuscated data'''
 
 from typing import List
 import re
