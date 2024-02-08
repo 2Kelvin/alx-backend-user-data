@@ -9,7 +9,9 @@ import logging
 import mysql.connector
 from os import environ
 
-PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
+
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password',
+              'ip', 'last_login', 'user_agent')
 
 
 class RedactingFormatter(logging.Formatter):
