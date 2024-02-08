@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-'''Logging in python
-
-This script handles logging and obfuscating data
-'''
+"""logging and obfuscating data in python"""
 from typing import List
 import re
 import logging
