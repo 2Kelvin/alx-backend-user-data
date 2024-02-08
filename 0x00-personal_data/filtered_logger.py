@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-'''Logging in python'''
+'''Logging in python
+
+This script handles logging and obfuscating data
+'''
 from typing import List
 import re
 import logging
@@ -10,7 +13,13 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 class RedactingFormatter(logging.Formatter):
-    '''Redacting Formatter class'''
+    '''Redacting Formatter class
+
+    Description: Creates logging formatter objects
+
+    Attributes: REDACTION, FORMAT, SEPARATOR
+    Methods: format()
+    '''
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -28,27 +37,23 @@ class RedactingFormatter(logging.Formatter):
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    """
-    Replaces sensitive information in a message with a redacted value
-    based on the list of fields to redact
+    '''returns an obfuscated log message
 
-    Args:
-        fields: list of fields to redact
-        redaction: the value to use for redaction
-        message: the string message to filter
-        separator: the separator to use between fields
-
-    Returns:
-        The filtered string message with redacted values
-    """
-    for f in fields:
-        message = re.sub(f'{f}=.*?{separator}',
-                         f'{f}={redaction}{separator}', message)
+    Arguments:
+        fields, redaction, message, separator
+    Return: an obfuscated log message
+    '''
+    for eachField in fields:
+        message = re.sub(f'{eachField}=.*?{separator}',
+                         f'{eachField}={redaction}{separator}', message)
     return message
 
 
 def get_logger() -> logging.Logger:
-    '''Returns a logger object'''
+    '''Returns a logger object
+
+    Takes no arguments and returns a logging.Logger object
+    '''
     userDataLogger = logging.getLogger('user_data')
     userDataLogger.setLevel(logging.INFO)
     userDataLogger.propagate = False
@@ -59,7 +64,11 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    '''connect to a database constaining user credentials'''
+    '''connect to a database containing user credentials
+
+    Log in to the database using the credentials stored in
+    the environment variables
+    '''
     usrName = environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
     pswrd = environ.get('PERSONAL_DATA_DB_PASSWORD', '')
     theHost = environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
@@ -75,7 +84,12 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main():
-    '''get into database, retrieve and display the data'''
+    '''get into database, retrieve and display the data
+
+    obtain a database connection using get_db and retrieve
+    all rows in the users table and display each row
+    under a filtered format
+    '''
     database = get_db()
     cursor = database.cursor()
     cursor.execute('SELECT * FROM  users;')
