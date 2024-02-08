@@ -94,3 +94,7 @@ def main() -> None:
         theLogger.info(rowStr.strip())
     cursor.close()
     database.close()
+
+
+if __name__ == '__main__':
+    main()
