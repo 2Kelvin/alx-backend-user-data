@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 '''Logging & handling obfuscated data'''
 from typing import List
-from re import sub
+import re
 import logging
 import mysql.connector
 from os import environ
@@ -20,8 +20,8 @@ def filter_datum(fields: List[str], redaction: str,
     Return: an obfuscated log message
     '''
     for eachField in fields:
-        message = sub(f'{eachField}=.*?{separator}',
-                      f'{eachField}={redaction}{separator}', message)
+        message = re.sub(f'{eachField}=.*?{separator}',
+                         f'{eachField}={redaction}{separator}', message)
     return message
 
 
