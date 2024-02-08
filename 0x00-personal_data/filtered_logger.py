@@ -7,27 +7,26 @@ import mysql.connector
 from os import environ
 
 
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
-    """returns the log message obfuscated"""
-    for field in fields:
-        message = re.sub(field + "=.*?" + separator,
-                         field + "=" + redaction + separator, message)
-    return message
-
-
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password',
               'ip', 'last_login', 'user_agent')
 
 
-class RedactingFormatter(logging.Formatter):
-    '''Redacting Formatter class
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
+    '''returns an obfuscated log message
 
-    Description: Creates logging formatter objects
-
-    Attributes: REDACTION, FORMAT, SEPARATOR
-    Methods: format()
+    Arguments:
+        fields, redaction, message, separator
+    Return: an obfuscated log message
     '''
+    for eachField in fields:
+        message = re.sub(f'{eachField}=.*?{separator}',
+                         f'{eachField}={redaction}{separator}', message)
+    return message
+
+
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class"""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -95,7 +94,3 @@ def main() -> None:
         theLogger.info(rowStr.strip())
     cursor.close()
     database.close()
-
-
-if __name__ == '__main__':
-    main()
