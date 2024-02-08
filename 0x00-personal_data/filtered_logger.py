@@ -28,16 +28,23 @@ class RedactingFormatter(logging.Formatter):
 
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
-    '''returns an obfuscated log message
+    """
+    Replaces sensitive information in a message with a redacted value
+    based on the list of fields to redact
 
-    Arguments:
-        fields, redaction, message, separator
-    Return: an obfuscated log message
-    '''
-    for eachField in fields:
-        logMessage = re.sub(f'{eachField}=.*?{separator}',
-                            f'{eachField}={redaction}{separator}', message)
-    return logMessage
+    Args:
+        fields: list of fields to redact
+        redaction: the value to use for redaction
+        message: the string message to filter
+        separator: the separator to use between fields
+
+    Returns:
+        The filtered string message with redacted values
+    """
+    for f in fields:
+        message = re.sub(f'{f}=.*?{separator}',
+                         f'{f}={redaction}{separator}', message)
+    return message
 
 
 def get_logger() -> logging.Logger:
