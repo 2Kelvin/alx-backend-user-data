@@ -8,8 +8,7 @@ import mysql.connector
 from os import environ
 
 
-PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password',
-              'ip', 'last_login', 'user_agent')
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password', 'ip')
 
 
 def filter_datum(fields: List[str], redaction: str,
