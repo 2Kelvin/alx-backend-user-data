@@ -12,7 +12,7 @@ class Auth():
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
         for eachExcludedPath in excluded_paths:
-            if path.rstrip('/') == eachExcludedPath.rstrip('/'):
+            if path.removesuffix('/') == eachExcludedPath.removesuffix('/'):
                 return False
         return True
 
