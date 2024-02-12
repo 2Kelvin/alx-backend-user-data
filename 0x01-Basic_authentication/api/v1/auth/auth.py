@@ -8,8 +8,13 @@ class Auth():
     """A class template for authentication purposes"""
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """Require authentication method"""
-        return False
+        """Check if authentication is required"""
+        if path is None or excluded_paths is None or len(excluded_paths) == 0:
+            return True
+        for eachExcludedPath in excluded_paths:
+            if path.rstrip('/') == eachExcludedPath.rstrip('/'):
+                return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """Authorization header method"""

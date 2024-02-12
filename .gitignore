@@ -1,4 +1,4 @@
 __pycache__
 *main.py
 *.csv
-main_0.py
+main*.py
