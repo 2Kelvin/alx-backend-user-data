@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auth class module"""
+"""Authorization class module"""
 from flask import request
 from typing import List, TypeVar
 
@@ -17,8 +17,10 @@ class Auth():
         return True
 
     def authorization_header(self, request=None) -> str:
-        """Authorization header method"""
-        return None
+        """Fetch auth credentials from authorization header"""
+        if request is None:
+            return None
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Current user public class method"""
