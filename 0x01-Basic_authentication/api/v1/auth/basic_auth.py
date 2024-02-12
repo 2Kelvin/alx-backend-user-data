@@ -41,7 +41,7 @@ class BasicAuth(Auth):
         try:
             colonIdx = decoded_base64_authorization_header.index(':')
             userEmail = decoded_base64_authorization_header[:colonIdx]
-            userPswd = decoded_base64_authorization_header[colonIdx:]
+            userPswd = decoded_base64_authorization_header[(colonIdx + 1):]
             return (userEmail, userPswd)
         except ValueError:
             return (None, None)
