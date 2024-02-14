@@ -48,13 +48,14 @@ def forbiddenRequest(error) -> str:
 @app.before_request
 def filter():
     """Filtering each request"""
-    pathList = ['/api/v1/status/',
-                '/api/v1/unauthorized/', '/api/v1/forbidden/']
+    pathList = ['/api/v1/status/', '/api/v1/unauthorized/',
+                '/api/v1/forbidden/', '/api/v1/auth_session/login/']
     if auth is None:
         return
     elif not auth.require_auth(path=request.path, excluded_paths=pathList):
         return
-    elif auth.authorization_header(request) is None:
+    elif auth.authorization_header(request) is None \
+            and auth.session_cookie(request) is None:
         abort(401)
     elif auth.current_user(request) is None:
         abort(403)
