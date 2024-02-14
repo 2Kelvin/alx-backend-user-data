@@ -15,7 +15,7 @@ class SessionAuth(Auth):
             return None
         # generating a session id using uuid
         # and converting it to a string
-        # since the method returns a string
+        # since the method returns a sessionID string
         sessionID = str(uuid.uuid4())
         SessionAuth.user_id_by_session_id[sessionID] = user_id
         return sessionID
