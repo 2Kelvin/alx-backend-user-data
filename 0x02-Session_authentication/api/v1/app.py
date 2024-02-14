@@ -57,7 +57,7 @@ def filter():
         abort(403)
     else:
         authorization = auth.authorization_header(request)
-        usr = auth.current_user(request)
+        request.current_user = auth.current_user(request)
 
 
 if __name__ == "__main__":
