@@ -4,12 +4,18 @@ import bcrypt
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> bytes:
     """Encrypts a user password"""
     encryptedPswd = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     return encryptedPswd
+
+
+def _generate_uuid() -> str:
+    """Generate a random & unique id string"""
+    return str(uuid4())
 
 
 class Auth:
