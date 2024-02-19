@@ -5,6 +5,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
+from typing import Dict
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -31,3 +34,13 @@ class DB:
         self._session.add(newUser)
         self._session.commit()
         return newUser
+
+    def find_user_by(self, **kwargs: Dict[str, str]) -> User:
+        """Find a User in the table"""
+        try:
+            foundUser = self._session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
+        return foundUser
