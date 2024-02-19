@@ -44,3 +44,18 @@ class DB:
         except InvalidRequestError:
             raise InvalidRequestError()
         return foundUser
+
+    def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
+        """Update the user with the given id in the database"""
+        updateDict = {}
+        searchedUser = self.find_user_by(id=user_id)
+        if searchedUser is None:
+            return
+        for k, v in kwargs.items():
+            if hasattr(User, k):
+                updateDict[getattr(User, k)] = v
+            else:
+                raise ValueError
+        self._session.query(User).filter(User.id == user_id).update(
+            updateDict, synchronize_session=False)
+        self._session.commit()
