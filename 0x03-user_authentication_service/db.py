@@ -7,7 +7,7 @@ from sqlalchemy.orm.session import Session
 from user import Base, User
 from typing import Dict
 from sqlalchemy.exc import InvalidRequestError
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import NoResultFound
 
 
 class DB:
@@ -37,13 +37,13 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict[str, str]) -> User:
         """Find a User in the table"""
-        if not kwargs:
-            raise InvalidRequestError
-
-        user = self._session.query(User).filter_by(**kwargs).first()
-        if not user:
-            raise NoResultFound
-        return user
+        try:
+            foundUser = self._session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
+        return foundUser
 
     def update_user(self, user_id: int, **kwargs: Dict[str, str]) -> None:
         """Update the user with the given id in the database"""
