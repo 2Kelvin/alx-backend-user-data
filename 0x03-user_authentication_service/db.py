@@ -7,7 +7,7 @@ from sqlalchemy.orm.session import Session
 from user import Base, User
 from typing import Dict
 from sqlalchemy.exc import InvalidRequestError
-from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
@@ -15,7 +15,7 @@ class DB:
 
     def __init__(self) -> None:
         """Initialize a new DB instance"""
-        self._engine = create_engine("sqlite:///a.db", echo=False)
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
